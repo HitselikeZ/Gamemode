@@ -1,0 +1,103 @@
+package de.hitselikez.cmd;
+
+import de.hitselikez.main.Main;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+public class GM implements CommandExecutor {
+    @Override
+    public boolean onCommand(CommandSender sender, Command cmd, String string, String[] args) {
+
+        Player p = (Player) sender;
+
+        if (args.length == 1) { //gm 1
+
+            if (p.hasPermission("command.gm")) {
+
+                switch (args[0]) {
+
+                    case "0":
+                        p.setGameMode(GameMode.SURVIVAL);
+                        p.sendMessage(Main.sys + "Du bist nun im Survival Modus !");
+                        break;
+
+                    case "1":
+                        p.setGameMode(GameMode.CREATIVE);
+                        p.sendMessage(Main.sys + "Du bist nun im Creative Modus !");
+                        break;
+
+                    case "2":
+                        p.setGameMode(GameMode.ADVENTURE);
+                        p.sendMessage(Main.sys + "Du bist nun im Adventure Modus !");
+                        break;
+                    case "3":
+                        p.setGameMode(GameMode.SPECTATOR);
+                        p.sendMessage(Main.sys + "Du bist nun im Spectator Modus !");
+                        break;
+
+                    default:
+                        p.sendMessage(Main.sys + "Bitte benutze /Gm [Mode] [Player]");
+
+                }
+
+            } else {
+
+                p.sendMessage(Main.noperms);
+
+            }
+
+        } else if (args.length == 2) { //gm 1 [Player]
+
+            if (p.hasPermission("command.gm.other")) {
+
+                Player t = Bukkit.getPlayer(args[1]);
+
+                switch (args[0]) {
+
+                    case "0":
+                        p.sendMessage(Main.sys + "Du hast den Spieler §6 " + t.getName() + " §7in den Survival Mode gesetzt !");
+                        t.setGameMode(GameMode.SURVIVAL);
+                        t.sendMessage(Main.sys + "Du bist nun im Survival Modus !");
+                        break;
+
+                    case "1":
+                        p.sendMessage(Main.sys + "Du hast den Spieler §6 " + t.getName() + " §7in den Creative Mode gesetzt !");
+                        t.setGameMode(GameMode.CREATIVE);
+                        t.sendMessage(Main.sys + "Du bist nun im Creative Modus !");
+                        break;
+
+                    case "2":
+                        p.sendMessage(Main.sys + "Du hast den Spieler §6 " + t.getName() + " §7in den Adventure Mode gesetzt !");
+                        t.setGameMode(GameMode.ADVENTURE);
+                        t.sendMessage(Main.sys + "Du bist nun im Adventure Modus !");
+                        break;
+                    case "3":
+                        p.sendMessage(Main.sys + "Du hast den Spieler §6 " + t.getName() + " §7in den Spectator Mode gesetzt !");
+                        t.setGameMode(GameMode.SPECTATOR);
+                        t.sendMessage(Main.sys + "Du bist nun im Spectator Modus !");
+                        break;
+
+                    default:
+                        p.sendMessage(Main.sys + "Bitte benutze /Gm [Mode] [Player]");
+
+                }
+
+            } else {
+
+                p.sendMessage(Main.noperms);
+
+            }
+
+        } else { //Fehler
+
+            p.sendMessage(Main.sys + "Bitte nutze /Gm [Mode] [Player]");
+
+        }
+
+        return false;
+    }
+}
